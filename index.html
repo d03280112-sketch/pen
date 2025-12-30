@@ -293,40 +293,42 @@ let pool = [
     hideFilename();
     lockedSrc = null;
 
- if (pool.length === 0) {
-  enterReviewMode(); // 你原本的結束回看模式
+if (pool.length === 0) {
+  enterReviewMode(); // 你原本的回看模式
 
   // ===== 主控台網址（已填好）=====
   const MASTER_URL = "https://d03280112-sketch.github.io/ALL/";
 
-  // ===== 建立全螢幕返回按鈕 =====
-  const backOverlay = document.createElement("div");
-  backOverlay.style.position = "fixed";
-  backOverlay.style.inset = "0";
-  backOverlay.style.background = "rgba(0,0,0,0.85)";
-  backOverlay.style.display = "flex";
-  backOverlay.style.alignItems = "center";
-  backOverlay.style.justifyContent = "center";
-  backOverlay.style.zIndex = "99999";
+  // ===== 避免重複建立按鈕 =====
+  if (!document.getElementById("back-to-master")) {
 
-  const backBtn = document.createElement("button");
-  backBtn.textContent = "返回主控台";
-  backBtn.style.fontSize = "64px";
-  backBtn.style.fontWeight = "900";
-  backBtn.style.padding = "40px 80px";
-  backBtn.style.borderRadius = "24px";
-  backBtn.style.border = "0";
-  backBtn.style.cursor = "pointer";
-  backBtn.style.background = "#FFD400";
-  backBtn.style.color = "#000";
-  backBtn.style.boxShadow = "0 0 40px rgba(255,212,0,0.8)";
+    const backBtn = document.createElement("button");
+    backBtn.id = "back-to-master";
+    backBtn.textContent = "返回主控台";
 
-  backBtn.addEventListener("click", () => {
-    window.location.href = MASTER_URL;
-  });
+    // 位置與外觀（左下角、大而清楚）
+    backBtn.style.position = "fixed";
+    backBtn.style.left = "24px";
+    backBtn.style.bottom = "24px";
+    backBtn.style.zIndex = "9999";
 
-  backOverlay.appendChild(backBtn);
-  document.body.appendChild(backOverlay);
+    backBtn.style.fontSize = "28px";
+    backBtn.style.fontWeight = "900";
+    backBtn.style.padding = "18px 28px";
+    backBtn.style.borderRadius = "18px";
+    backBtn.style.border = "0";
+    backBtn.style.cursor = "pointer";
+
+    backBtn.style.background = "#FFD400";
+    backBtn.style.color = "#000";
+    backBtn.style.boxShadow = "0 0 20px rgba(255,212,0,0.6)";
+
+    backBtn.addEventListener("click", () => {
+      window.location.href = MASTER_URL;
+    });
+
+    document.body.appendChild(backBtn);
+  }
 }
 
   }
@@ -372,4 +374,5 @@ preloadImages(pool, () => {
 
 </body>
 </html>
+
 
