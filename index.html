@@ -140,6 +140,22 @@
   <div class="side" id="picked"></div>
 
 <script>
+// 圖片預載（GitHub Pages 必備）
+  function preloadImages(list, callback) {
+    let loaded = 0;
+    const total = list.length;
+
+    list.forEach(src => {
+      const img = new Image();
+      img.onload = img.onerror = () => {
+        loaded++;
+        if (loaded === total) {
+          callback();
+        }
+      };
+      img.src = src;
+    });
+  }
   // 10 張 PNG（放同資料夾；若你用選資料夾版，這裡會改成讀入）
 let pool = [
   "尺.png",
@@ -301,9 +317,12 @@ let pool = [
   }
 
   // 初始
-  updateHud();
+updateHud();
+
+preloadImages(pool, () => {
   showRandom();
   start();
+});
 
   document.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
